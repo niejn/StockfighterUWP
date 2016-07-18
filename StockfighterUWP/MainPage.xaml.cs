@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using StockfighterUWP.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,16 +24,18 @@ namespace StockfighterUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private TraderModel _trader;
+        //private TraderModel _trader;
+        public TraderViewModel Trader { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
+            Trader = new TraderViewModel();
         }
 
         private async void startTraderButton_Click(object sender, RoutedEventArgs e)
         {
-            _trader = new TraderModel();
-            await Task.Run(async () => await _trader.Init(VenueTextBox.Text, AccountTextBox.Text));
+            await Trader.InitModel(VenueTextBox.Text, AccountTextBox.Text);
         }
     }
 }

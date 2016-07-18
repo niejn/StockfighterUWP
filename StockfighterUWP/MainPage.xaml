@@ -9,12 +9,22 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
-        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Height="32" Margin="185,40,0,0" TextWrapping="Wrap" Text="Stockfighter UWP ver 0.0" VerticalAlignment="Top" Width="300" FontSize="24"/>
-        <Button x:Name="StartTraderButton" Content="Start Trader" HorizontalAlignment="Left" Margin="330,100,0,0" VerticalAlignment="Top" Click="startTraderButton_Click"/>
-        <Image x:Name="LogoImage" HorizontalAlignment="Left" Height="32" Margin="100,40,0,0" VerticalAlignment="Top" Width="80" xamlAnimatedGif:AnimationBehavior.SourceUri="Assets/NyanCatLogo.gif"/>
-        <TextBox x:Name="VenueTextBox" HorizontalAlignment="Left" Margin="100,100,0,0" TextWrapping="Wrap" Text="Venue Name" VerticalAlignment="Top" Width="110"/>
-        <TextBox x:Name="AccountTextBox" HorizontalAlignment="Left" Margin="215,100,0,0" TextWrapping="Wrap" Text="Account" VerticalAlignment="Top" Width="110"/>
-        <TextBlock x:Name="StatusBarTextBlock" HorizontalAlignment="Left" Margin="100,690,0,0" TextWrapping="Wrap" Text="Status Bar" VerticalAlignment="Top" Width="1170"/>
-        <TextBlock x:Name="ApiUrlTextBlock" HorizontalAlignment="Left" Margin="100,665,0,0" TextWrapping="Wrap" Text="API URL" VerticalAlignment="Top" Width="1170"/>
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Height="32" Margin="185,40,0,0"
+                   TextWrapping="Wrap" Text="Stockfighter UWP ver 0.0" VerticalAlignment="Top" Width="300"
+                   FontSize="24" />
+        <Button x:Name="StartTraderButton" Content="Start Trader" HorizontalAlignment="Left" Margin="330,100,0,0"
+                VerticalAlignment="Top" Click="startTraderButton_Click" />
+        <Image x:Name="LogoImage" HorizontalAlignment="Left" Height="32" Margin="100,40,0,0" VerticalAlignment="Top"
+               Width="80" xamlAnimatedGif:AnimationBehavior.SourceUri="Assets/NyanCatLogo.gif" />
+        <TextBox x:Name="VenueTextBox" HorizontalAlignment="Left" Margin="100,100,0,0" TextWrapping="Wrap"
+                 Text="Venue Name" VerticalAlignment="Top" Width="110" />
+        <TextBox x:Name="AccountTextBox" HorizontalAlignment="Left" Margin="215,100,0,0" TextWrapping="Wrap"
+                 Text="Account" VerticalAlignment="Top" Width="110" />
+        <TextBlock x:Name="StatusBarTextBlock" HorizontalAlignment="Left" Margin="100,690,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Width="1170"
+                   Text="{x:Bind Trader.StatusBarString, Mode=TwoWay, FallbackValue='Status Bar'}" />
+        <TextBlock x:Name="ApiUrlTextBlock" HorizontalAlignment="Left" Margin="100,665,0,0" TextWrapping="Wrap"
+                   VerticalAlignment="Top" Width="1170"
+                   Text="{x:Bind Trader.LastApiUrlString, Mode=TwoWay, FallbackValue='Api Url'}" />
     </Grid>
 </Page>

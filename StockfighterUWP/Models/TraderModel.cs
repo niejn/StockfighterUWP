@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Net.Http;
-using Windows.Devices.Geolocation;
-using System.Diagnostics;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
+using StockfighterUWP.ViewModels;
 
-namespace StockfighterUWP
+namespace StockfighterUWP.Models
 {
-    class TraderModel
+    public class TraderModel
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         private const string ApiKey = "4f7c537ce4b923b340a285c8c8b3431275934937";
 
@@ -24,11 +19,18 @@ namespace StockfighterUWP
 
         public string LastApiUrl;
 
+        public string StatusBar;
+
+        private TraderViewModel _viewModel;
+
         public TraderModel()
         {
             _client = new HttpClient();
+        }
 
-            
+        public void SetViewModel(TraderViewModel viewModel)
+        {
+            _viewModel = viewModel;
         }
 
         public async Task Init(string venue, string account)
@@ -45,23 +47,28 @@ namespace StockfighterUWP
             if (await ApiIsUp())
             {
                 Debug.WriteLine("Stockfighter API is up.");
+                _viewModel.StatusBarString = "Stockfighter API is up.";
             }
         }
 
         private async Task<bool> ApiIsUp()
         {
-            var response = await Get($"{ApiUrl}heartbeat");
-            if (!response.IsSuccessStatusCode)
+            try
             {
+                var response = await Get($"{ApiUrl}heartbeat");
+                return response.IsSuccessStatusCode;
+            }
+            catch (HttpRequestException)
+            {
+                StatusBar = "Http request error";
                 return false;
             }
-            var parsedResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content.ToString());
-            return (parsedResponse["ok"] == "true");
         }
 
         private async Task<HttpResponseMessage> Get (string request)
         {
-            LastApiUrl = request;
+            //LastApiUrl = request;
+            _viewModel.LastApiUrlString = request;
             return await _client.GetAsync(request);
         }
 
