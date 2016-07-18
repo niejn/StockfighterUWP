@@ -7,7 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Height="32" Margin="100,40,0,0" TextWrapping="Wrap" Text="Stockfighter UWP ver 0.0" VerticalAlignment="Top" Width="300" FontSize="24"/>
+        <Button x:Name="StartTraderButton" Content="Start Trader" HorizontalAlignment="Left" Margin="370,100,0,0" VerticalAlignment="Top" Click="startTraderButton_Click"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="32" Margin="20,40,0,0" VerticalAlignment="Top" Width="80" Source="Assets/NyanCatLogo.gif"/>
 
     </Grid>
 </Page>
