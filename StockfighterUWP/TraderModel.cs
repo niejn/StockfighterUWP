@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Windows.Devices.Geolocation;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace StockfighterUWP
 {
@@ -21,10 +22,17 @@ namespace StockfighterUWP
 
         private const string ApiUrl = "https://api.stockfighter.io/ob/api/";
 
-        public TraderModel(string venue = null, string account = null)
+        public string LastApiUrl;
+
+        public TraderModel()
         {
             _client = new HttpClient();
 
+            
+        }
+
+        public async Task Init(string venue, string account)
+        {
             if (venue != null)
             {
                 _venue = venue;
@@ -33,11 +41,7 @@ namespace StockfighterUWP
             {
                 _account = account;
             }
-            
-        }
 
-        public async Task Init()
-        {
             if (await ApiIsUp())
             {
                 Debug.WriteLine("Stockfighter API is up.");
@@ -46,10 +50,20 @@ namespace StockfighterUWP
 
         private async Task<bool> ApiIsUp()
         {
-            var response = await _client.GetAsync($"{ApiUrl}heartbeat");
-            return false;
+            var response = await Get($"{ApiUrl}heartbeat");
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+            var parsedResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content.ToString());
+            return (parsedResponse["ok"] == "true");
         }
 
+        private async Task<HttpResponseMessage> Get (string request)
+        {
+            LastApiUrl = request;
+            return await _client.GetAsync(request);
+        }
 
     }
 }

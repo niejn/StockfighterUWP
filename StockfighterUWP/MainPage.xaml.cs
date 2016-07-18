@@ -32,7 +32,7 @@ namespace StockfighterUWP
         private async void startTraderButton_Click(object sender, RoutedEventArgs e)
         {
             _trader = new TraderModel();
-            await Task.Run(async () => await _trader.Init());
+            await Task.Run(async () => await _trader.Init(VenueTextBox.Text, AccountTextBox.Text));
         }
     }
 }
