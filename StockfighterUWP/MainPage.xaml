@@ -68,10 +68,10 @@
                        Text="Status: " VerticalAlignment="Top" Margin="0,0,20,0" />
             <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap"
                        VerticalAlignment="Top" Width="1070" Margin="0,0,0,10"
-                       Text="{x:Bind Trader.LastApiUrlString, Mode=TwoWay, FallbackValue='Api Url'}" />
+                       Text="{x:Bind Trader.LastApiUrlString, Mode=OneWay, FallbackValue='Api Url'}" />
             <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap"
                        VerticalAlignment="Top" Width="1070"
-                       Text="{x:Bind Trader.StatusBarString, Mode=TwoWay, FallbackValue='Status Bar'}" />
+                       Text="{x:Bind Trader.StatusBarString, Mode=OneWay, FallbackValue='Status Bar'}" />
         </Grid>
     </Grid>
 </Page>

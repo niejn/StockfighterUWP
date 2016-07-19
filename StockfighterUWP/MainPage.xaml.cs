@@ -35,7 +35,7 @@ namespace StockfighterUWP
 
         private async void startTraderButton_Click(object sender, RoutedEventArgs e)
         {
-            await Trader.InitModel(VenueTextBox.Text, AccountTextBox.Text);
+            await Trader.Init(VenueTextBox.Text, AccountTextBox.Text);
         }
     }
 }
