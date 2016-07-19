@@ -9,22 +9,69 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
-        <TextBlock x:Name="TitleTextBlock" HorizontalAlignment="Left" Height="32" Margin="185,40,0,0"
-                   TextWrapping="Wrap" Text="Stockfighter UWP ver 0.0" VerticalAlignment="Top" Width="300"
-                   FontSize="24" />
-        <Button x:Name="StartTraderButton" Content="Start Trader" HorizontalAlignment="Left" Margin="330,100,0,0"
-                VerticalAlignment="Top" Click="startTraderButton_Click" />
-        <Image x:Name="LogoImage" HorizontalAlignment="Left" Height="32" Margin="100,40,0,0" VerticalAlignment="Top"
-               Width="80" xamlAnimatedGif:AnimationBehavior.SourceUri="Assets/NyanCatLogo.gif" />
-        <TextBox x:Name="VenueTextBox" HorizontalAlignment="Left" Margin="100,100,0,0" TextWrapping="Wrap"
-                 Text="Venue Name" VerticalAlignment="Top" Width="110" />
-        <TextBox x:Name="AccountTextBox" HorizontalAlignment="Left" Margin="215,100,0,0" TextWrapping="Wrap"
-                 Text="Account" VerticalAlignment="Top" Width="110" />
-        <TextBlock x:Name="StatusBarTextBlock" HorizontalAlignment="Left" Margin="100,690,0,0" TextWrapping="Wrap"
-                   VerticalAlignment="Top" Width="1170"
-                   Text="{x:Bind Trader.StatusBarString, Mode=TwoWay, FallbackValue='Status Bar'}" />
-        <TextBlock x:Name="ApiUrlTextBlock" HorizontalAlignment="Left" Margin="100,665,0,0" TextWrapping="Wrap"
-                   VerticalAlignment="Top" Width="1170"
-                   Text="{x:Bind Trader.LastApiUrlString, Mode=TwoWay, FallbackValue='Api Url'}" />
+        <!--Definition for main screen-->
+        <Grid.RowDefinitions>
+            <!--Logo + title-->
+            <RowDefinition Height="Auto" />
+            <!--Start Trader bar-->
+            <RowDefinition Height="Auto" />
+            <!--Main content listview-->
+            <RowDefinition Height="*" />
+            <!--Bottom info section-->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Grid for the logo and title-->
+        <Grid Grid.Row="0" Margin="50, 50, 20, 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top"
+                   Width="80" xamlAnimatedGif:AnimationBehavior.SourceUri="Assets/NyanCatLogo.gif" />
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="32"
+                       TextWrapping="Wrap" Text="Stockfighter UWP ver 0.0" VerticalAlignment="Top" Width="300"
+                       FontSize="24" Margin="20,0,0,0" />
+        </Grid>
+
+        <!--Grid for start trader menu-->
+        <Grid Grid.Row="1" Margin="50, 0, 20, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBox x:Name="VenueTextBox" Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap"
+                     Text="Venue Name" VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
+            <TextBox x:Name="AccountTextBox" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap"
+                     Text="Account" VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
+            <Button x:Name="StartTraderButton" Grid.Column="2" Content="Start Trader" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Click="startTraderButton_Click" />
+        </Grid>
+
+        <!--Last grid for status section-->
+        <Grid Grid.Row="3" Margin="50, 0, 20, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       Text="Last API call: " VerticalAlignment="Top" Margin="0,0,20,10" />
+            <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       Text="Status: " VerticalAlignment="Top" Margin="0,0,20,0" />
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Width="1070" Margin="0,0,0,10"
+                       Text="{x:Bind Trader.LastApiUrlString, Mode=TwoWay, FallbackValue='Api Url'}" />
+            <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Width="1070"
+                       Text="{x:Bind Trader.StatusBarString, Mode=TwoWay, FallbackValue='Status Bar'}" />
+        </Grid>
     </Grid>
 </Page>
