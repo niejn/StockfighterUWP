@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using StockfighterUWP.Models;
+using StockfighterUWP.Requests;
+using StockfighterUWP.Utilities;
 
 namespace StockfighterUWP.ViewModels
 {
@@ -9,24 +13,26 @@ namespace StockfighterUWP.ViewModels
     {
         private readonly HttpClient _client;
 
-        private const string ApiKey = "4f7c537ce4b923b340a285c8c8b3431275934937";
-
         private string _venue;
 
         private string _account;
 
-        private const string ApiUrl = "https://api.stockfighter.io/ob/api/";
-
         public string LastApiUrlString
         {
-            get { return This.LastApiUrl; }
-            set { SetProperty(This.LastApiUrl, value, () => This.LastApiUrl = value); }
+            get { return This.LastApiUrlString; }
+            set { SetProperty(This.LastApiUrlString, value, () => This.LastApiUrlString = value); }
         }
 
         public string StatusBarString
         {
-            get { return This.StatusBar; }
-            set { SetProperty(This.StatusBar, value, () => This.StatusBar = value); }
+            get { return This.StatusBarString; }
+            set { SetProperty(This.StatusBarString, value, () => This.StatusBarString = value); }
+        }
+
+        public string BigTextBlockString
+        {
+            get { return This.BigTextBlockString; }
+            set { SetProperty(This.BigTextBlockString, value, () => This.BigTextBlockString = value); }
         }
 
         public TraderViewModel(TraderModel model = null) : base(model)
@@ -36,11 +42,8 @@ namespace StockfighterUWP.ViewModels
 
         public async Task Init(string venue, string account)
         {
-            if (venue != null)
-            {
-                _venue = venue;
-            }
-            if (account != null)
+            _venue = !venue.IsNullOrEmpty() ? venue : "TESTEX";
+            if (!account.IsNullOrEmpty())
             {
                 _account = account;
             }
@@ -56,7 +59,7 @@ namespace StockfighterUWP.ViewModels
         {
             try
             {
-                var response = await Get($"{ApiUrl}heartbeat");
+                var response = await Get(RequestHelper.GetApiHeartbeatRequest());
                 return response.IsSuccessStatusCode;
             }
             catch (HttpRequestException)
@@ -66,10 +69,59 @@ namespace StockfighterUWP.ViewModels
             }
         }
 
+        public async Task<string> GetStockInVenue(string venue = null)
+        {
+            if (venue == null)
+            {
+                venue = _venue;
+            }
+            var response = await Get(RequestHelper.GetStocksInVenueRequest(venue));
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<HttpResponseMessage> Buy(string stock, int qty, string venue = null, int price = 0,
+            string orderType = null)
+        {
+            if (venue == null)
+            {
+                venue = _venue;
+            }
+            if (price == 0)
+            {
+                orderType = "market";
+            }
+            if (orderType == null)
+            {
+                orderType = "limit";
+            }
+            var request = RequestHelper.Order(_account, venue, stock, price, qty, "buy", orderType);
+            var response = await Send(request);
+            return response;
+        }
+
+
         private async Task<HttpResponseMessage> Get(string request)
         {
-            LastApiUrlString = request;
-            return await _client.GetAsync(request);
+            //LastApiUrlString = request;
+            //BigTextBlockString += request;
+            var response = await _client.GetAsync(request);
+            await LogResponse(response);
+            return response;
         }
+
+        private async Task<HttpResponseMessage> Send(HttpRequestMessage request)
+        {
+            var response = await _client.SendAsync(request);
+            await LogResponse(response);
+            return response;
+        }
+
+        private async Task LogResponse(HttpResponseMessage response)
+        {
+            BigTextBlockString += $"[{DateTime.Now.ToString("HH:mm:ss.ff")}]: ";
+            BigTextBlockString += $"{response.RequestMessage.RequestUri.ToString().TrimEnd()}\n\n";
+            BigTextBlockString += $"{(await response.Content.ReadAsStringAsync()).TrimEnd()}\n\n";
+        }
+
     }
 }

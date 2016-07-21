@@ -12,8 +12,9 @@ namespace StockfighterUWP.Models
     /// </summary>
     public class TraderModel
     {
-        public string LastApiUrl { get; set; }
+        public string LastApiUrlString { get; set; }
 
-        public string StatusBar { get; set; }
+        public string StatusBarString { get; set; }
+        public string BigTextBlockString { get; set; }
     }
 }

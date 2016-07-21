@@ -37,5 +37,10 @@ namespace StockfighterUWP
         {
             await Trader.Init(VenueTextBox.Text, AccountTextBox.Text);
         }
+
+        private async void testButton_Click(object sender, RoutedEventArgs e)
+        {
+            await Trader.Buy("YYIR", 100);
+        }
     }
 }

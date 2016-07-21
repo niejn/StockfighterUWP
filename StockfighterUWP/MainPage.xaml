@@ -5,8 +5,7 @@
     xmlns:local="using:StockfighterUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:xamlAnimatedGif="using:XamlAnimatedGif"
-    mc:Ignorable="d">
+    xmlns:xamlAnimatedGif="using:XamlAnimatedGif">
 
     <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
         <!--Definition for main screen-->
@@ -41,13 +40,18 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
-            <TextBox x:Name="VenueTextBox" Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap"
-                     Text="Venue Name" VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
-            <TextBox x:Name="AccountTextBox" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap"
-                     Text="Account" VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
-            <Button x:Name="StartTraderButton" Grid.Column="2" Content="Start Trader" HorizontalAlignment="Left"
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="Venue Name: " VerticalAlignment="Center"
+                       TextAlignment="Center" Width="Auto" Height="Auto" Margin="0, 0, 10, 0" />
+            <TextBox x:Name="VenueTextBox" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap"
+                     VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
+            <TextBlock Grid.Column="2" HorizontalAlignment="Left" Text="Account: " VerticalAlignment="Center"
+                       TextAlignment="Center" Width="Auto" Height="Auto" Margin="0, 0, 10, 0" />
+            <TextBox x:Name="AccountTextBox" Grid.Column="3" HorizontalAlignment="Left" TextWrapping="Wrap"
+                     VerticalAlignment="Top" Width="110" Margin="0, 0, 10, 0" />
+            <Button x:Name="StartTraderButton" Grid.Column="4" Content="Start Trader" HorizontalAlignment="Left"
                     VerticalAlignment="Top" Click="startTraderButton_Click" />
         </Grid>
 
@@ -73,5 +77,19 @@
                        VerticalAlignment="Top" Width="1070"
                        Text="{x:Bind Trader.StatusBarString, Mode=OneWay, FallbackValue='Status Bar'}" />
         </Grid>
+        <Grid HorizontalAlignment="Stretch" Margin="10" Grid.Row="2" VerticalAlignment="Stretch" Width="Auto" Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer HorizontalAlignment="Stretch" Height="Auto" Grid.Column="1" VerticalAlignment="Stretch"
+                          Width="Auto" BorderThickness="1" BorderBrush="Silver">
+                <TextBlock FontSize ="12" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{x:Bind Trader.BigTextBlockString, Mode=OneWay}"/>
+            </ScrollViewer>
+            <Button x:Name="TestButton" Content="Foobar" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Click="testButton_Click"/>
+
+        </Grid>
+
+
     </Grid>
 </Page>
